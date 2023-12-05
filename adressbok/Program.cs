@@ -6,4 +6,3 @@ var menuService = new MenuService();
 
 menuService.ShowMainMenu();
 
-Console.ReadKey();
