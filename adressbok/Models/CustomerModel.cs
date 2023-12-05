@@ -2,7 +2,7 @@
 
 namespace adressbok.Models
 {
-    internal class CustomerModel
+    public class CustomerModel
     {
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;

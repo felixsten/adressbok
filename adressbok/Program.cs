@@ -1,6 +1,9 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using adressbok.Models;
+using adressbok.Services;
 
+var menuService = new MenuService();
 
-var customers = new List<CustomerModel>();
+menuService.ShowMainMenu();
+
 Console.ReadKey();
