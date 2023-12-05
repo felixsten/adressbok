@@ -1,2 +1,5 @@
 ﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+using adressbok.Models;
+
+var customers = new List<CustomerModel>();
+Console.ReadKey();
