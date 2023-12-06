@@ -4,11 +4,12 @@ using adressbok.Models;
 using System;
 using System.Reflection.Metadata;
 
+
 namespace adressbok.Services
 {
-    internal class MenuService
+    public class MenuService
     {
-        private readonly CustomerService _customerService = new CustomerService();
+        public readonly CustomerService _customerService = new CustomerService();
 
         public void ShowMainMenu()
         {
@@ -49,7 +50,7 @@ namespace adressbok.Services
         }
     
 
-        private void ViewRegisterMenu()
+        public void ViewRegisterMenu()
         {
         var customer = new CustomerModel();
 
@@ -75,7 +76,7 @@ namespace adressbok.Services
         
 
 
-        private void ViewAllMenu()
+        public void ViewAllMenu()
         {
             var customers = _customerService.GetCustomersFromList();
 
@@ -94,7 +95,7 @@ namespace adressbok.Services
         }
 
 
-        private void ViewSearchMenu()
+        public void ViewSearchMenu()
         {
             var customers = _customerService.GetCustomersFromList();
             
@@ -120,30 +121,16 @@ namespace adressbok.Services
 
         }
 
-        private void ViewDeleteMenu()
+        public void ViewDeleteMenu()
         {
-            var customers = _customerService.GetCustomersFromList();
+            var customer = new CustomerModel();
 
 
 
             Console.Clear();
             Console.Write("Enter email address to delete person from the list: ");
-            string searchEmail = Console.ReadLine()!;
+            _customerService.RemoveCustomerFromList(customer);
 
-            CustomerModel customer = customers.Find(p => p.Email.Equals(searchEmail, StringComparison.OrdinalIgnoreCase))!;
-
-            if (customer != null)
-            {
-                Console.WriteLine($"Person found: {customer.FirstName} {customer.LastName}");
-
-                customers.Remove(customer);
-                Console.WriteLine("Person has been deleted from the list.");
-                
-            }
-            else
-            {
-                Console.WriteLine("Could not find any person with this email to delete from the list.");
-            }
 
         }
 
