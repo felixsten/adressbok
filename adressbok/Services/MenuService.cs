@@ -1,6 +1,7 @@
 ﻿
 
 using adressbok.Models;
+using Newtonsoft.Json;
 using System;
 using System.Reflection.Metadata;
 
@@ -27,6 +28,7 @@ namespace adressbok.Services
 
                 switch(option)
                 {
+                    // switch som tar dig till de olika alternativen på menyn
                     case "1":
                         ViewRegisterMenu();
                         break;
@@ -39,6 +41,7 @@ namespace adressbok.Services
                     case "4":
                         ViewDeleteMenu();
                         break;
+                    // om inget av de 4 alternativen anges skrivs detta ut
                     default: Console.WriteLine("Invalid option. Choose 1 2 3 or 4.");
                         break;
 
@@ -52,6 +55,7 @@ namespace adressbok.Services
 
         public void ViewRegisterMenu()
         {
+            // meny för att lägga till nya personer, använder allt från CustomerModel
         var customer = new CustomerModel();
 
         Console.Clear();
@@ -70,18 +74,19 @@ namespace adressbok.Services
         Console.Write("Enter home address: ");
         customer.Address = Console.ReadLine()!;
 
+            // sparar informationen som anges till listan
         _customerService.AddCustomerToList(customer);
         }
 
         
 
-
+        // alternativ som visar alla användare i listan
         public void ViewAllMenu()
         {
             var customers = _customerService.GetCustomersFromList();
 
             Console.Clear();
-
+            // foreach loop för att lista upp alla personer i listan
             foreach (var customer in customers)
             {
                 Console.WriteLine($"{customer.FirstName} {customer.LastName}");
@@ -94,42 +99,80 @@ namespace adressbok.Services
 
         }
 
-
+        // används för att söka efter specifik användare
         public void ViewSearchMenu()
         {
-            var customers = _customerService.GetCustomersFromList();
-            
-
-
             Console.Clear();
-            Console.Write("Enter email address to search for person: ");
+            // anger vart json fil ligger och skapar variabel
+            string jsonFilePath = @"C:\Projects\registered.json";
+            // läser json fil och skapar variabel
+            string jsonContent = File.ReadAllText(jsonFilePath);
+
+            // listan görs läsbar för att hitta email adressen
+            List<CustomerModel> customers = JsonConvert.DeserializeObject<List<CustomerModel>>(jsonContent)!;
+
+            // skriv in email av personen du vill hitta i listan
+            Console.Write("Enter email to search for person: ");
             string searchEmail = Console.ReadLine()!;
 
-            CustomerModel customer = customers.Find(p => p.Email.Equals(searchEmail, StringComparison.OrdinalIgnoreCase))!;
+            CustomerModel foundPerson = customers.Find(x => x.Email.Equals(searchEmail, StringComparison.OrdinalIgnoreCase))!;
 
-            if (customer != null)
+            // om person finns i listan skrivs all deras information ut
+            if (foundPerson != null)
             {
-                Console.WriteLine($"Person found: {customer.FirstName} {customer.LastName}");
-                Console.WriteLine($"Phone number: {customer.PhoneNumber}");
-                Console.WriteLine($"Email address: {customer.Email}");
-                Console.WriteLine($"Home address: {customer.Address}");
+                Console.WriteLine($"Person found in list: {foundPerson.FirstName} {foundPerson.LastName}");
+                Console.WriteLine($"Phone number: {foundPerson.PhoneNumber}");
+                Console.WriteLine($"Email address: {foundPerson.Email}");
+                Console.WriteLine($"Home address: {foundPerson.Address}");
+
             }
             else
             {
-                Console.WriteLine("Could not find any person with this email in the list.");
+                Console.WriteLine("Person could not be found in list.");
             }
+
+            
 
         }
 
+        // används för att ta bort en användare från listan genom att skriva deras email
         public void ViewDeleteMenu()
         {
-            var customer = new CustomerModel();
-
-
-
             Console.Clear();
+            // anger vart json fil ligger och skapar variabel
+            string jsonFilePath = @"C:\Projects\registered.json";
+            List<CustomerModel> customers;
+            // läser json fil och skapar variabel
+            string jsonContent = File.ReadAllText(jsonFilePath);
+
+            // listan görs läsbar för att hitta email adressen
+            customers = JsonConvert.DeserializeObject<List<CustomerModel>>(jsonContent)!;
+
+            // skriv in email som tillhör personen du ska ta bort från listan
             Console.Write("Enter email address to delete person from the list: ");
-            _customerService.RemoveCustomerFromList(customer);
+            string searchEmail = Console.ReadLine()!;
+
+            CustomerModel foundPerson = customers.Find(x => x.Email.Equals(searchEmail, StringComparison.OrdinalIgnoreCase))!;
+
+            // om en person i listan har email adressen som skrevs in tas den bort från listan
+            if (foundPerson != null)
+            {
+                Console.WriteLine($"Person found in list: {foundPerson.FirstName} {foundPerson.LastName}");
+
+                // tar bort personen från listan och uppdaterar json fil 
+                customers.Remove(foundPerson);
+                string updatedJson = JsonConvert.SerializeObject(customers);
+                File.WriteAllText(jsonFilePath, updatedJson);
+
+                Console.WriteLine("Person has been deleted from the list.");
+            }
+            else
+            {
+                Console.WriteLine("Person could not be found in list.");
+            }
+
+            
+
 
 
         }

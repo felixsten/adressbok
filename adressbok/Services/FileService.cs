@@ -15,6 +15,7 @@ public class FileService(string filePath) : IFileService
 
     public bool SaveContentToFile(string content)
     {
+        // använder streamwriter för att spara information till json fil
         try
         {
             using (var sw = new StreamWriter(_filePath))
@@ -31,6 +32,7 @@ public class FileService(string filePath) : IFileService
 
     public string GetContentFromFile()
     {
+        // använder streamreader för att läsa genom hela json filen 
         try
         {
             if (File.Exists(_filePath))

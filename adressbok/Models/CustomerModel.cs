@@ -4,6 +4,7 @@ namespace adressbok.Models
 {
     public class CustomerModel
     {
+        // model för alla användare i programmet
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
         public string PhoneNumber { get; set; } = string.Empty;

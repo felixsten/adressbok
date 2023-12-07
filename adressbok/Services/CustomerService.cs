@@ -9,15 +9,18 @@ namespace adressbok.Services
 {
     public class CustomerService
     {
+        // lista med personer skapas
         public readonly FileService _fileService = new FileService(@"C:\Projects\registered.json");
         public List<CustomerModel> _customers = [];
         public void AddCustomerToList(CustomerModel customer)
         {
             try
             {
+                // används för att lägga till ny person i listan, kollar också att samma email inte används
                 if (!_customers.Any(x => x.Email == customer.Email))
                 {
                     _customers.Add(customer);
+                    // använder fileservice för att spara personen i json fil
                     _fileService.SaveContentToFile(JsonConvert.SerializeObject(_customers));
                 }
             }
@@ -28,36 +31,11 @@ namespace adressbok.Services
   
         }
 
-        public void RemoveCustomerFromList(CustomerModel customer)
-        {
-            try
-            {
-                List<CustomerModel> _customers = JsonConvert.DeserializeObject<List<CustomerModel>>(@"C:\Projects\registered.json")!;
 
-                _customers.Find(x => x.Email == customer.Email);
-
-                if (customer != null)
-                {
-                    
-                    _customers.Remove(customer);
-                    string updatedJson = JsonConvert.SerializeObject(_customers);
-                    File.WriteAllText(@"C:\Projects\registered.json", updatedJson);
-
-                    Console.WriteLine("Person was deleted from list");
-                }
-                else
-                {
-                    Console.WriteLine("Person in list not found");
-                }
-
-
-            }
-            catch (Exception ex) { Debug.WriteLine(ex.Message); }
-
-        }
 
         public IEnumerable<CustomerModel> GetCustomersFromList()
         {
+            // gör json lista läsbar i menyn
             try
             {
                 var content = _fileService.GetContentFromFile();
@@ -68,6 +46,7 @@ namespace adressbok.Services
             }
             catch (Exception ex) { Debug.WriteLine(ex.Message); }
 
+            // skickar tillbaks listan för att läsas
             return _customers;
         }
 
