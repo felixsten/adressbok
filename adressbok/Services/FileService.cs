@@ -12,10 +12,14 @@ public interface IFileService
 public class FileService(string filePath) : IFileService
 {
     private readonly string _filePath = filePath;
-
+    /// <summary>
+    /// sparar information till fil med streamwriter
+    /// </summary>
+    /// <param name="content"></param>
+    /// <returns></returns>
     public bool SaveContentToFile(string content)
     {
-        // använder streamwriter för att spara information till json fil
+        
         try
         {
             using (var sw = new StreamWriter(_filePath))
@@ -29,10 +33,13 @@ public class FileService(string filePath) : IFileService
         return false;
     }
 
-
+    /// <summary>
+    /// läser igenom fil med streamreader
+    /// </summary>
+    /// <returns></returns>
     public string GetContentFromFile()
     {
-        // använder streamreader för att läsa genom hela json filen 
+        
         try
         {
             if (File.Exists(_filePath))

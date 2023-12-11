@@ -12,15 +12,17 @@ namespace adressbok.Services
         // lista med personer skapas
         public readonly FileService _fileService = new FileService(@"C:\Projects\registered.json");
         public List<CustomerModel> _customers = [];
+        /// <summary>
+        /// lägger till användare i lista
+        /// </summary>
+        /// <param name="customer"></param>
         public void AddCustomerToList(CustomerModel customer)
         {
             try
             {
-                // används för att lägga till ny person i listan, kollar också att samma email inte används
                 if (!_customers.Any(x => x.Email == customer.Email))
                 {
                     _customers.Add(customer);
-                    // använder fileservice för att spara personen i json fil
                     _fileService.SaveContentToFile(JsonConvert.SerializeObject(_customers));
                 }
             }
@@ -32,7 +34,10 @@ namespace adressbok.Services
         }
 
 
-
+        /// <summary>
+        /// hämtar alla användare i listan
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<CustomerModel> GetCustomersFromList()
         {
             // gör json lista läsbar i menyn

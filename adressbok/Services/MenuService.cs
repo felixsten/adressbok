@@ -11,7 +11,9 @@ namespace adressbok.Services
     public class MenuService
     {
         public readonly CustomerService _customerService = new CustomerService();
-
+        /// <summary>
+        /// listar alla menyalternativ
+        /// </summary>
         public void ShowMainMenu()
         {
             while (true)
@@ -51,11 +53,13 @@ namespace adressbok.Services
 
             }
         }
-    
 
+        /// <summary>
+        /// meny för att lägga till nya personer
+        /// </summary>
         public void ViewRegisterMenu()
         {
-            // meny för att lägga till nya personer, använder allt från CustomerModel
+            
         var customer = new CustomerModel();
 
         Console.Clear();
@@ -80,7 +84,9 @@ namespace adressbok.Services
 
         
 
-        // alternativ som visar alla användare i listan
+        /// <summary>
+        /// alternativ som visar alla användare i listan
+        /// </summary>
         public void ViewAllMenu()
         {
             var customers = _customerService.GetCustomersFromList();
@@ -99,7 +105,10 @@ namespace adressbok.Services
 
         }
 
-        // används för att söka efter specifik användare
+
+        /// <summary>
+        /// används för att söka efter specifik användare genom att skriva in email
+        /// </summary>
         public void ViewSearchMenu()
         {
             Console.Clear();
@@ -135,7 +144,9 @@ namespace adressbok.Services
 
         }
 
-        // används för att ta bort en användare från listan genom att skriva deras email
+        /// <summary>
+        /// används för att ta bort en användare från listan genom att skriva deras email
+        /// </summary>
         public void ViewDeleteMenu()
         {
             Console.Clear();
