@@ -1,10 +1,10 @@
 ﻿
 
-using adressbok.Interfaces;
+
 
 namespace adressbok.Models
 {
-    public class CustomerModel : ICustomer
+    public class CustomerModel
     {
         public string FirstName { get; set; } = null!;
         public string LastName { get; set; } = null!;

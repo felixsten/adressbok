@@ -1,10 +1,22 @@
 ﻿
 using adressbok.Models;
 using adressbok.Services;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 
+var builder = Host.CreateDefaultBuilder().ConfigureServices(services =>
+{
 
-var menuService = new MenuService();
+    services.AddSingleton<MenuService>();
+    services.AddSingleton<CustomerService>();
+
+}).Build();
+
+builder.Start();
+Console.Clear();
+
+var menuService = builder.Services.GetRequiredService<MenuService>();
 menuService.ShowMainMenu();
 
 

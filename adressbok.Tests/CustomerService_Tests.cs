@@ -1,6 +1,5 @@
 ﻿
 using adressbok.Services;
-using adressbok.Interfaces;
 using adressbok.Models;
 
 namespace adressbok.Tests

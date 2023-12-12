@@ -10,7 +10,13 @@ namespace adressbok.Services
 {
     public class MenuService
     {
-        public readonly CustomerService _customerService = new CustomerService();
+        public readonly CustomerService _customerService;
+
+        public MenuService(CustomerService customerService)
+        {
+            _customerService = customerService;
+        }
+
         /// <summary>
         /// listar alla menyalternativ
         /// </summary>
