@@ -16,7 +16,7 @@ namespace adressbok.Services
         /// lägger till användare i lista
         /// </summary>
         /// <param name="customer"></param>
-        public void AddCustomerToList(CustomerModel customer)
+        public bool AddCustomerToList(CustomerModel customer)
         {
             try
             {
@@ -24,9 +24,11 @@ namespace adressbok.Services
                 {
                     _customers.Add(customer);
                     _fileService.SaveContentToFile(JsonConvert.SerializeObject(_customers));
+                    return true;
                 }
             }
             catch (Exception ex) { Debug.WriteLine(ex.Message); }
+            return false;   
  
         
 
@@ -47,12 +49,13 @@ namespace adressbok.Services
                 if (!string.IsNullOrEmpty(content))
                 {
                     _customers = JsonConvert.DeserializeObject<List<CustomerModel>>(content)!;
+                    return _customers;
                 }
             }
             catch (Exception ex) { Debug.WriteLine(ex.Message); }
-
-            // skickar tillbaks listan för att läsas
-            return _customers;
+            return null!;
+            
+            
         }
 
 
