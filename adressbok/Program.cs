@@ -10,6 +10,7 @@ var builder = Host.CreateDefaultBuilder().ConfigureServices(services =>
 
     services.AddSingleton<MenuService>();
     services.AddSingleton<CustomerService>();
+    services.AddSingleton<FileService>();
 
 }).Build();
 
