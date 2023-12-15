@@ -1,6 +1,9 @@
 ﻿using adressbokMaui.Services;
 using adressbokMaui.ViewModels;
+using adressbokMaui.Views;
 using Microsoft.Extensions.Logging;
+
+
 
 namespace adressbokMaui
 {
@@ -21,6 +24,8 @@ namespace adressbokMaui
             builder.Services.AddSingleton<MainPage>();
             builder.Services.AddSingleton<CustomerService>();
             builder.Services.AddSingleton<FileService>();
+            builder.Services.AddSingleton<SearchPage>();
+            builder.Services.AddSingleton<SearchViewModel>();
 
 #if DEBUG
             builder.Logging.AddDebug();

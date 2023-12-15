@@ -1,4 +1,6 @@
-﻿namespace adressbokMaui
+﻿using adressbokMaui.ViewModels;
+
+namespace adressbokMaui
 {
     public partial class App : Application
     {
